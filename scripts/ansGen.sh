@@ -1,13 +1,18 @@
 #!/bin/sh
-PROG=something
 COUNT=0
 
-for DIR in ./*_tests
+# uses $1 for the program to be used
+
+for DIR in ./*tests
 do
+    if [ ! -d $DIR ]; then
+        echo "testing directory doesn't exist"
+        exit
+    fi
+
     echo this is $DIR:
-    for file in ${DIR}/t*
+    for file in ${DIR}/*.txt
     do 
-        expr $COUNT + 1
         echo $file
     done
 done

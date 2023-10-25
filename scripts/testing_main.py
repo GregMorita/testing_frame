@@ -3,9 +3,10 @@ import sys
 import glob
 import getopt
 
-options = "rhv:"
+options = "hrv:"
 arglst = sys.argv[1:]
 opt = ""
+val = False
 
 """
 Simple python script to help test c code
@@ -22,17 +23,17 @@ def compile(program: str):
 def valgrind(program: str, args: list):
     pass
 
-def main(): 
+def parsing_args():
     if (len(sys.argv) < 4 and len(sys.argv) > 2):
         print("improper amount of arguments, try testing.py -h")
     
     try:
-        arguments = getopt.getopt(arglst, options)
+        arguments = getopt.getopt(arglst, options) #TODO: read up on getopt.py
 
         for currentArgument in arguments:
     
             if currentArgument in ("-h"):
-                print("Usage: testing.py [-hvr] Testcase_dir Testcase_ans_dir Program_path [Program_args]")
+                print("Usage: testing.py Testcase_dir Testcase_ans_dir Program_path [Program_args] [-hrv]")
                 print("r: runs files in Testcase_dir, passes in Testcase_ans_dir filepath for use on smaller, incremental tests") 
                 print("h: displays this message. v: runs valgrind on program to check for memLeaks")
                 exit(0)
@@ -45,6 +46,8 @@ def main():
             
     except getopt.error as err:
         print(str(err))
+
+def main(): 
     
     total_args = len(sys.argv[0])
 
@@ -54,8 +57,7 @@ def main():
     else:
         compile(prog)
 
-    for file in glob.glob('*.txt'):
-        subprocess.run(["./a.out", file, "| diff", file + ".soln"])
+    subprocess.run([])
 
 
 if (__name__ == '__main__'):
